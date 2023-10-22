@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tiktok_clone/features/videos/widgets/video_post.dart';
 
 class VideoTimelineScreddn extends StatefulWidget {
   const VideoTimelineScreddn({super.key});
@@ -11,6 +11,8 @@ class VideoTimelineScreddn extends StatefulWidget {
 class _VideoTimelineScreddnState extends State<VideoTimelineScreddn> {
   int _itemCount = 4;
   final PageController _pageController = PageController();
+  final _scrollDuration = const Duration(milliseconds: 150);
+  final _scrollCureve = Curves.linear;
   List<Color> colors = [
     Colors.blue,
     Colors.red,
@@ -36,22 +38,15 @@ class _VideoTimelineScreddnState extends State<VideoTimelineScreddn> {
     }
   }
 
+  void _onVideoFinished() {}
+
   @override
   Widget build(BuildContext context) {
     return PageView.builder(
-      controller: _pageController,
-      scrollDirection: Axis.vertical,
-      onPageChanged: _onPageChanged,
-      itemCount: _itemCount,
-      itemBuilder: (context, index) => Container(
-        color: colors[index],
-        child: Center(
-          child: Text(
-            "Screen $index",
-            style: const TextStyle(fontSize: 68),
-          ),
-        ),
-      ),
-    );
+        controller: _pageController,
+        scrollDirection: Axis.vertical,
+        onPageChanged: _onPageChanged,
+        itemCount: _itemCount,
+        itemBuilder: (context, index) => const VideoPost());
   }
 }
