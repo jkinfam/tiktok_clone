@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/features/videos/widgets/video_post.dart';
 
@@ -28,6 +30,7 @@ class _VideoTimelineScreddnState extends State<VideoTimelineScreddn> {
   }
 
   void _onVideoFinished() {
+    return;
     _pageController.nextPage(
       duration: _scrollDuration,
       curve: _scrollCurve,
@@ -40,14 +43,26 @@ class _VideoTimelineScreddnState extends State<VideoTimelineScreddn> {
     super.dispose();
   }
 
+  Future<void> _onRefresh() {
+    return Future.delayed(
+      const Duration(seconds: 5),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return PageView.builder(
-        controller: _pageController,
-        scrollDirection: Axis.vertical,
-        onPageChanged: _onPageChanged,
-        itemCount: _itemCount,
-        itemBuilder: (context, index) =>
-            VideoPost(onVideoFinished: _onVideoFinished, index: index));
+    return RefreshIndicator(
+      onRefresh: _onRefresh,
+      displacement: 40,
+      edgeOffset: 10,
+      color: Theme.of(context).primaryColor,
+      child: PageView.builder(
+          controller: _pageController,
+          scrollDirection: Axis.vertical,
+          onPageChanged: _onPageChanged,
+          itemCount: _itemCount,
+          itemBuilder: (context, index) =>
+              VideoPost(onVideoFinished: _onVideoFinished, index: index)),
+    );
   }
 }
