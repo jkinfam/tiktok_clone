@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/sign_up_screen.dart';
+import 'package:tiktok_clone/features/inbox/activity_screen.dart';
 import 'package:tiktok_clone/features/main_navigation/main_navigation_screen.dart';
 import 'package:tiktok_clone/features/onboarding/interests_screen.dart';
 
@@ -17,21 +18,25 @@ class TikTokApp extends StatelessWidget {
     return MaterialApp(
       title: 'Tiktok clone',
       theme: ThemeData(
-        appBarTheme: const AppBarTheme(
-          centerTitle: true,
-          foregroundColor: Colors.black,
-          backgroundColor: Colors.white,
-          elevation: 0,
-          titleTextStyle: TextStyle(
-            color: Colors.black,
-            fontSize: Sizes.size20,
-            fontWeight: FontWeight.w600,
+          appBarTheme: const AppBarTheme(
+            centerTitle: true,
+            foregroundColor: Colors.black,
+            backgroundColor: Colors.white,
+            elevation: 0,
+            titleTextStyle: TextStyle(
+              color: Colors.black,
+              fontSize: Sizes.size20,
+              fontWeight: FontWeight.w600,
+            ),
           ),
-        ),
-        scaffoldBackgroundColor: Colors.white,
-        primaryColor: const Color(0xFFE9435A),
-      ),
-      home: const MainNavigationScreen(),
+          scaffoldBackgroundColor: Colors.white,
+          // splashColor: Colors.transparent,
+          // highlightColor: Colors.transparent,
+          primaryColor: const Color(0xFFE9435A),
+          textSelectionTheme: const TextSelectionThemeData(
+            cursorColor: Color(0xFFE9435A),
+          )),
+      home: const ActivityScreen(),
     );
   }
 }
