@@ -36,7 +36,7 @@ class TikTokApp extends StatelessWidget {
           textSelectionTheme: const TextSelectionThemeData(
             cursorColor: Color(0xFFE9435A),
           )),
-      home: const ActivityScreen(),
+      home: const MainNavigationScreen(),
     );
   }
 }
