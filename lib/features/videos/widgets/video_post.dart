@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
@@ -28,6 +30,23 @@ class _VideoPostState extends State<VideoPost>
 
   late final AnimationController _animationController;
   bool _isPaused = false;
+  bool _soundOnOff = false;
+
+  void _soundChanged(bool? newValue) {
+    if (newValue == null) return;
+    if (newValue == false) {
+      setState(() {
+        _soundOnOff = newValue;
+        _videoPlayerController.setVolume(0);
+      });
+    }
+    if (newValue == true) {
+      setState(() {
+        _soundOnOff = newValue;
+        _videoPlayerController.setVolume(5);
+      });
+    }
+  }
 
   void _onVideoChange() {
     if (_videoPlayerController.value.isInitialized) {
@@ -42,6 +61,9 @@ class _VideoPostState extends State<VideoPost>
     await _videoPlayerController.initialize();
 
     await _videoPlayerController.setLooping(true);
+    if (kIsWeb) {
+      await _videoPlayerController.setVolume(0);
+    }
 
     setState(() {});
     _videoPlayerController.addListener(_onVideoChange);
@@ -177,6 +199,8 @@ class _VideoPostState extends State<VideoPost>
               right: 10,
               child: Column(
                 children: [
+                  CupertinoSwitch(value: _soundOnOff, onChanged: _soundChanged),
+                  Gaps.v24,
                   const CircleAvatar(
                     radius: 25,
                     backgroundColor: Colors.black,

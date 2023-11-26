@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/settings/settings_screen.dart';
 import 'package:tiktok_clone/features/users/widgets/persistent_tab_bar.dart';
 
 class UserProfileScreen extends StatefulWidget {
@@ -12,6 +13,11 @@ class UserProfileScreen extends StatefulWidget {
 }
 
 class _UserProfileScreenState extends State<UserProfileScreen> {
+  void _onGearPressed() {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => const SettingScreen()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -24,7 +30,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 title: const Text('니꼬'),
                 actions: [
                   IconButton(
-                      onPressed: () {},
+                      onPressed: _onGearPressed,
                       icon: const FaIcon(
                         FontAwesomeIcons.gear,
                         size: Sizes.size20,
@@ -205,7 +211,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 crossAxisCount: 3,
                 crossAxisSpacing: Sizes.size2,
                 mainAxisSpacing: Sizes.size2,
-                childAspectRatio: 9 / 14,
+                childAspectRatio: 9 / 16,
               ),
               itemBuilder: (context, index) => Column(
                 children: [
