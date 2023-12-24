@@ -10,7 +10,7 @@ class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   void _onSignUpTap(BuildContext context) {
-    Navigator.of(context).pop();
+    Navigator.of(context).pop("Hello!");
   }
 
   void _onEmailLoginTap(BuildContext context) {
@@ -63,9 +63,8 @@ class LoginScreen extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: BottomAppBar(
+      bottomNavigationBar: Container(
         color: isDarkMode(context) ? null : Colors.grey.shade50,
-        elevation: 8,
         child: Padding(
           padding: const EdgeInsets.symmetric(
             vertical: Sizes.size32,

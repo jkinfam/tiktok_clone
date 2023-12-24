@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/generated/l10n.dart';
 import 'package:tiktok_clone/utils.dart';
 
 class VideoComments extends StatefulWidget {
@@ -48,8 +49,8 @@ class _VideoCommentsState extends State<VideoComments> {
         appBar: AppBar(
           backgroundColor: isDark ? null : Colors.grey.shade50,
           automaticallyImplyLeading: false,
-          title: const Text(
-            "22979 comments",
+          title: Text(
+            S.of(context).commentTitle(0, 0),
           ),
           actions: [
             IconButton(
@@ -127,11 +128,14 @@ class _VideoCommentsState extends State<VideoComments> {
               Positioned(
                 bottom: 0,
                 width: size.width,
-                child: BottomAppBar(
+                child: Container(
+                  color: Theme.of(context).scaffoldBackgroundColor,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: Sizes.size11,
-                      horizontal: Sizes.size16,
+                    padding: const EdgeInsets.only(
+                      left: Sizes.size16,
+                      right: Sizes.size16,
+                      top: Sizes.size10,
+                      bottom: Sizes.size24,
                     ),
                     child: Row(children: [
                       CircleAvatar(

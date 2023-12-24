@@ -19,7 +19,7 @@ class MainNavigationScreen extends StatefulWidget {
 }
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
-  int _selectedIndex = 1;
+  int _selectedIndex = 0;
 
   // final screens = [
   //   StfScreen(key: GlobalKey()),
@@ -51,7 +51,8 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     final isDark = isDarkMode(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: _selectedIndex == 0 ? Colors.black : Colors.white,
+      backgroundColor:
+          _selectedIndex == 0 || isDark ? Colors.black : Colors.white,
       body: Stack(
         children: [
           Offstage(
@@ -72,7 +73,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomAppBar(
+      bottomNavigationBar: Container(
         color: _selectedIndex == 0 || isDark ? Colors.black : Colors.white,
         child: Padding(
           padding: const EdgeInsets.all(Sizes.size12),
