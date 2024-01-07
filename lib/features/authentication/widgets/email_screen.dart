@@ -1,17 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/authentication/view_models/signup_view_model.dart';
 import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
 import 'package:tiktok_clone/features/authentication/widgets/password_screen.dart';
 
-class EmailScreen extends StatefulWidget {
-  const EmailScreen({super.key});
+class EmailScreenArgs {
+  final String username;
 
-  @override
-  State<EmailScreen> createState() => _EmailScreenState();
+  EmailScreenArgs({required this.username});
 }
 
-class _EmailScreenState extends State<EmailScreen> {
+class EmailScreen extends ConsumerStatefulWidget {
+  final String username;
+
+  const EmailScreen({super.key, required this.username});
+
+  @override
+  ConsumerState<EmailScreen> createState() => _EmailScreenState();
+}
+
+class _EmailScreenState extends ConsumerState<EmailScreen> {
   final TextEditingController _emailController = TextEditingController();
   String _email = "";
 
@@ -48,6 +58,7 @@ class _EmailScreenState extends State<EmailScreen> {
 
   void _onSubmit() {
     if (_email.isEmpty || _isEmailValid() != null) return;
+    ref.read(SignUpForm.notifier).state = {"email": _email};
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -76,9 +87,9 @@ class _EmailScreenState extends State<EmailScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Gaps.v40,
-              const Text(
-                "What is your email?",
-                style: TextStyle(
+              Text(
+                "What is your email?, ${widget.username}",
+                style: const TextStyle(
                   fontSize: Sizes.size24,
                   fontWeight: FontWeight.w700,
                 ),

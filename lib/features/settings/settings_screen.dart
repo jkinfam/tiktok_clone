@@ -1,26 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:tiktok_clone/common/widgets/main_navigation/widgets/video_config/video_config.dart';
+import 'package:tiktok_clone/features/authentication/repos/authentication_repo.dart';
+import 'package:tiktok_clone/features/videos/view_models/playback_config_vm.dart';
 
-class SettingScreen extends StatefulWidget {
+class SettingScreen extends ConsumerWidget {
   const SettingScreen({super.key});
 
   @override
-  State<SettingScreen> createState() => _SettingScreenState();
-}
-
-class _SettingScreenState extends State<SettingScreen> {
-  bool _notifications = false;
-  void _onNotificationsChanged(bool? newValue) {
-    if (newValue == null) return;
-    setState(() {
-      _notifications = newValue;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
         appBar: AppBar(
           title: const Text("settings"),
@@ -28,19 +21,33 @@ class _SettingScreenState extends State<SettingScreen> {
         body: ListView(
           children: [
             CupertinoSwitch(
-              value: _notifications,
-              onChanged: _onNotificationsChanged,
+              value: false,
+              onChanged: (value) {},
             ),
             SwitchListTile.adaptive(
-              value: _notifications,
-              onChanged: _onNotificationsChanged,
+              value: ref.watch(playbackConfigProvider).muted,
+              onChanged: (value) =>
+                  ref.read(playbackConfigProvider.notifier).setMuted(value),
+              title: const Text('Mute video'),
+              subtitle: const Text('video will be muted by default.'),
+            ),
+            SwitchListTile.adaptive(
+              value: ref.watch(playbackConfigProvider).autoplay,
+              onChanged: (value) =>
+                  ref.read(playbackConfigProvider.notifier).setAutoplay(value),
+              title: const Text('Autoplay'),
+              subtitle: const Text('Video will start playing automatically.'),
+            ),
+            SwitchListTile.adaptive(
+              value: false,
+              onChanged: (value) {},
               title: const Text('Enable notifications'),
               subtitle: const Text('this is a subtitle'),
             ),
             CheckboxListTile(
               activeColor: Colors.black,
-              value: _notifications,
-              onChanged: _onNotificationsChanged,
+              value: false,
+              onChanged: (value) {},
               title: const Text("Enable notifications"),
             ),
             ListTile(
@@ -54,13 +61,11 @@ class _SettingScreenState extends State<SettingScreen> {
                 if (kDebugMode) {
                   print(date);
                 }
-                if (!mounted) return;
                 final time = await showTimePicker(
                     context: context, initialTime: TimeOfDay.now());
                 if (kDebugMode) {
                   print(time);
                 }
-                if (!mounted) return;
                 final booking = await showDateRangePicker(
                   context: context,
                   firstDate: DateTime(1990),
@@ -97,7 +102,10 @@ class _SettingScreenState extends State<SettingScreen> {
                         child: const Text('No'),
                       ),
                       CupertinoDialogAction(
-                        onPressed: () => Navigator.of(context).pop(),
+                        onPressed: () {
+                          ref.read(authRepo).signOut();
+                          context.go("/");
+                        },
                         isDestructiveAction: true,
                         child: const Text('Yes'),
                       ),
